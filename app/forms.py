@@ -1,15 +1,10 @@
 from django import forms
-from .models import *
-
-# app/forms.py
-from django import forms
-from .models import Usuario
+from .models import Usuario, Plano, Filme, Serie, Avaliacao, Categoria, Relatorio, Pagamento, Dispositivo, IdiomaLegenda, RedeSocial, Notificacao, Recomendacao, Video
 
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ['nome', 'email', 'data_nascimento', 'endereco', 'plano_assinatura']
-
 
 class PlanoForm(forms.ModelForm):
     class Meta:
@@ -95,14 +90,11 @@ class RecomendacaoForm(forms.ModelForm):
         widgets = {
             'data_recomendacao': forms.DateInput(attrs={'type': 'datetime-local'}),
         }
-        
+
 class VideoForm(forms.ModelForm):
     class Meta:
         model = Video
         fields = ['title', 'video_file']
-
-from django import forms
-from .models import Usuario
 
 class RegistroUsuarioForm(forms.ModelForm):
     senha = forms.CharField(widget=forms.PasswordInput, label="Senha")
@@ -125,4 +117,3 @@ class RegistroUsuarioForm(forms.ModelForm):
         if commit:
             usuario.save()  # Salva o usuário no banco de dados
         return usuario
-
