@@ -123,158 +123,108 @@
       background-color: red;
       margin-right: 10px;
     }
-    /* Estilo do Header */
-header {
-  background-color: #141414; /* Fundo escuro */
-  padding: 10px 30px; /* Espaçamento do header */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para um efeito mais profissional */
-}
-
-/* Barra de Navegação */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 1200px; /* Limita a largura para melhorar o layout */
-  margin: 0 auto; /* Centraliza o conteúdo */
-}
-
-/* Logo */
-.logo a {
-  font-size: 30px;
-  color: #e50914; /* Vermelho Netflix */
-  text-decoration: none;
-  font-weight: bold;
-  text-transform: uppercase; /* Letras maiúsculas para um visual mais forte */
-}
-
-/* Links de Navegação */
-.nav-links {
-  display: flex;
-  list-style: none;
-  justify-content: center; /* Alinha os links ao centro */
-  margin: 0;
-  padding: 0;
-}
-
-.nav-links li {
-  margin-left: 30px; /* Espaçamento entre os links */
-}
-
-.nav-links a {
-  color: #dcdcdc; /* Cor neutra */
-  text-decoration: none;
-  font-size: 18px;
-  font-weight: bold;
-  padding: 10px 20px;
-  border-radius: 5px;
-  transition: all 0.3s ease;
-  position: relative; /* Para o efeito de hover */
-}
-
-/* Efeito de Hover nos Links */
-.nav-links a:hover {
-  background-color: #e50914; /* Vermelho Netflix */
-  color: #141414; /* Contraste para o texto */
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Sombra suave ao passar o mouse */
-  transform: scale(1.05); /* Efeito de aumento suave */
-}
-
-/* Efeito de Clique nos Links */
-.nav-links a:active {
-  transform: scale(0.98); /* Efeito de diminuição quando o link é clicado */
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); /* Aumenta a sombra ao clicar */
-}
-
-/* Estilo do Link da Foto de Perfil */
-.profile-link {
-  display: inline-block;
-}
-
-/* Estilo da Imagem Circular */
-.profile-pic {
-  width: 40px;  /* Tamanho do círculo */
-  height: 40px; /* Tamanho do círculo */
-  border-radius: 50%; /* Faz a imagem ser redonda */
-  overflow: hidden; /* Garante que a imagem fique dentro do círculo */
-  border: 2px solid #e50914; /* Borda vermelha em torno do círculo */
-  transition: all 0.3s ease; /* Suaviza a transição */
-}
-
-.profile-pic img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Garante que a imagem cubra bem o círculo */
-}
-
-/* Estilo de hover para o link da foto de perfil */
-.profile-link:hover .profile-pic {
-  border-color: #f40612; /* Muda a cor da borda ao passar o mouse */
-  transform: scale(1.1); /* Aumenta um pouco a foto de perfil ao passar o mouse */
-}
-
-/* Estilo do Botão de Login/Cadastro */
-.login-btn {
-  background-color: #e50914;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  color: #141414;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.login-btn:hover {
-  background-color: #f40612;
-  transform: scale(1.05);
-}
-
-/* Estilo do Botão de Categoria */
-.categoria-btn {
-  background-color: #e50914;
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: bold;
-  color: #141414;
-  text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.categoria-btn:hover {
-  background-color: #f40612;
-  transform: scale(1.05);
-}
+ 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+
+<style>
+  /* Suas regras CSS específicas para o header */
+  header {
+    background-color: #141414; /* Fundo escuro */
+    padding: 10px 30px; /* Espaçamento do header */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para um efeito mais profissional */
+  }
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px; /* Limita a largura para melhorar o layout */
+    margin: 0 auto; /* Centraliza o conteúdo */
+  }
+
+  .logo a {
+    font-size: 30px;
+    color: #e50914; /* Vermelho Netflix */
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase; /* Letras maiúsculas para um visual mais forte */
+  }
+
+  .nav-links {
+    display: flex;
+    list-style: none;
+    justify-content: center; /* Alinha os links ao centro */
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-links li {
+    margin-left: 30px; /* Espaçamento entre os links */
+  }
+
+  .nav-links a {
+    color: #dcdcdc; /* Cor neutra */
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+    position: relative; /* Para o efeito de hover */
+  }
+
+  .nav-links a:hover {
+    background-color: #e50914; /* Vermelho Netflix */
+    color: #141414; /* Contraste para o texto */
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Sombra suave ao passar o mouse */
+    transform: scale(1.05); /* Efeito de aumento suave */
+  }
 </style>
 </head>
 <body>
   <header>
-    <div class="navbar">
-        <!-- Logo -->
-        <div class="logo">
-            <a href="/">Meu Site</a>
-        </div>
-        
-        <!-- Links de Navegação -->
-        <ul class="nav-links">
-            <li><a href="{% url 'pagina_de_confirmacao' %}" class="login-btn">Login/Cadastro</a></li>
-            <li><a href="{% url 'categoria' %}" class="categoria-btn">Categoria</a></li>
-            
-            <!-- Foto de Perfil -->
-            <li>
-                <a href="{% url 'configuracao' %}" class="profile-link">
-                    <div class="profile-pic">
-                        <!-- Foto de perfil do usuário -->
-                        <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" />
-                    </div>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <nav class="navbar">
+      <div class="logo">
+        <a href="/">Meu Site</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="{% url 'pagina_de_confirmacao' %}">Login/Cadastro</a></li>
+        <li><a href="{% url 'categoria' %}">Categoria</a></li>
+        <li>
+          <a href="{% url 'configuracao' %}" class="profile-link">
+            <div class="profile-pic">
+              <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" />
+            </div>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </header>
-
 
 
 
@@ -347,18 +297,19 @@ header {
 <div id="loader" class="loader-overlay">
   <div class="spinner"></div>
 </div>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
   // Efeito de fade-in para os links de navegação
-  window.onload = function() {
-      const navLinks = document.querySelectorAll('.nav-links a');
-      navLinks.forEach((link, index) => {
-          setTimeout(() => {
-              link.style.opacity = '1';
-              link.style.transition = 'opacity 0.5s ease-in';
-          }, index * 200); // Anima os links com um pequeno delay entre eles
-      });
-  }
+window.onload = function() {
+  const navLinks = document.querySelectorAll('.nav-links a');
+  navLinks.forEach((link, index) => {
+    setTimeout(() => {
+      link.style.opacity = '1';
+      link.style.transition = 'opacity 0.5s ease-in';
+    }, index * 200); // Anima os links com um pequeno delay entre eles
+  });
+}
 </script>
 
 </body>
