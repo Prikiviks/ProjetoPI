@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>CodePen - Netflix Inspired Movie Gallery</title>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css'>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    var isUserLoggedIn = {{ user_logged_in_json|safe }};
+    var isPaymentCompleted = {{ payment_completed_json|safe }};
+  </script>
+  {% load static %}
+
+    <!-- Link para o arquivo CSS -->
+  <link rel="stylesheet" href="{% static 'styles.css' %}">
+
+
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;800&display=swap");
+
+    body, html {
+      background: #000000;
+      padding: 0;
+      margin: 0;
+      padding-bottom: 6rem;
+      font-family: "Montserrat", sans-serif;
+      width: 100%;
+    }
+    .container {
+      padding-bottom: 3rem;
+    }
+    img {
+      -webkit-box-reflect: below 5px linear-gradient(transparent, transparent, rgba(0, 0, 0, 0.4));
+      -webkit-transition: all 0.5s ease;
+      transition: all 0.5s ease;
+    }
+    .container img:hover {
+      transform: scale(1.1);
+    }
+    .last {
+      margin-top: 6.5rem;
+    }
+    .featured_wrapper {
+      position: relative;
+    }
+    .featured_wrapper img {
+      width: 100%;
+      height: 350px;
+      object-fit: cover;
+    }
+    .title_wrapper {
+      position: absolute;
+      width: 100%;
+      left: 2rem;
+      bottom: 2rem;
+      padding: 20px 40px;
+      box-sizing: border-box;
+    }
+    .title_wrapper h1 {
+      width: 70%;
+    }
+    button {
+      background: #f40612 !important;
+      color: #fff !important;
+      font-size: 18px;
+      padding: 0.5rem 3rem;
+      outline: none;
+      border: 0 !important;
+    }
+	.featured_wrapper img {
+		width: 100vw; /* Largura total da janela */
+		height: calc(100vh - 200px); /* Altura total da janela menos 50px */
+		object-fit: cover; /* Cobre todo o espaço sem distorção */
+		margin-top: 50px; /* Espaço na parte superior */
+	  }
+	.featured_wrapper {
+		position: relative;
+	}
+    .video_wrapper {
+      position: absolute;
+      top: 70px; /* Ajuste conforme necessário */
+      right: -350px; /* Ajuste conforme necessário */
+      width: 1400px; /* Largura do vídeo */
+      z-index: 10; /* Para ficar acima da imagem */
+	    border-radius: 20px
+    }
+    .video {
+      width: 100%;
+      height: auto;
+      
+    }
+    .container-user {
+      display: flex;
+      justify-content: space-between; /* Espaça links e usuário */
+      align-items: center; /* Alinha verticalmente */
+      padding: 1rem; /* Adiciona um espaço interno */
+      background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil */
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Linha inferior */
+    }
+    
+    .linksheader a {
+      color: white; /* Cor dos links */
+      margin-right: 1.5rem; /* Espaçamento entre links */
+      text-decoration: none; /* Remove sublinhado */
+      transition: color 0.3s; /* Transição suave para cor */
+    }
+    
+    .linksheader a:hover {
+      color: #f40612; /* Cor do hover */
+    }
+    
+    .user {
+      background-color: red; /* Corrigido de 'backbackgroud-color' */
+      width: 50px; /* Ajuste para um tamanho melhor */
+      height: 50px; /* Ajuste para um tamanho melhor */
+      border-radius: 50%;
+      border: solid 1px white;
+    }
+    .imguser{
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background-color: red;
+      margin-right: 10px;
+    }
+    /* Estilo do Header */
+header {
+  background-color: #141414; /* Fundo escuro */
+  padding: 10px 30px; /* Espaçamento do header */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5); /* Sombra para um efeito mais profissional */
+}
+
+/* Barra de Navegação */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px; /* Limita a largura para melhorar o layout */
+  margin: 0 auto; /* Centraliza o conteúdo */
+}
+
+/* Logo */
+.logo a {
+  font-size: 30px;
+  color: #e50914; /* Vermelho Netflix */
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase; /* Letras maiúsculas para um visual mais forte */
+}
+
+/* Links de Navegação */
+.nav-links {
+  display: flex;
+  list-style: none;
+  justify-content: center; /* Alinha os links ao centro */
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin-left: 30px; /* Espaçamento entre os links */
+}
+
+.nav-links a {
+  color: #dcdcdc; /* Cor neutra */
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  position: relative; /* Para o efeito de hover */
+}
+
+/* Efeito de Hover nos Links */
+.nav-links a:hover {
+  background-color: #e50914; /* Vermelho Netflix */
+  color: #141414; /* Contraste para o texto */
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* Sombra suave ao passar o mouse */
+  transform: scale(1.05); /* Efeito de aumento suave */
+}
+
+/* Efeito de Clique nos Links */
+.nav-links a:active {
+  transform: scale(0.98); /* Efeito de diminuição quando o link é clicado */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); /* Aumenta a sombra ao clicar */
+}
+
+/* Estilo do Link da Foto de Perfil */
+.profile-link {
+  display: inline-block;
+}
+
+/* Estilo da Imagem Circular */
+.profile-pic {
+  width: 40px;  /* Tamanho do círculo */
+  height: 40px; /* Tamanho do círculo */
+  border-radius: 50%; /* Faz a imagem ser redonda */
+  overflow: hidden; /* Garante que a imagem fique dentro do círculo */
+  border: 2px solid #e50914; /* Borda vermelha em torno do círculo */
+  transition: all 0.3s ease; /* Suaviza a transição */
+}
+
+.profile-pic img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Garante que a imagem cubra bem o círculo */
+}
+
+/* Estilo de hover para o link da foto de perfil */
+.profile-link:hover .profile-pic {
+  border-color: #f40612; /* Muda a cor da borda ao passar o mouse */
+  transform: scale(1.1); /* Aumenta um pouco a foto de perfil ao passar o mouse */
+}
+
+/* Estilo do Botão de Login/Cadastro */
+.login-btn {
+  background-color: #e50914;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #141414;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #f40612;
+  transform: scale(1.05);
+}
+
+/* Estilo do Botão de Categoria */
+.categoria-btn {
+  background-color: #e50914;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #141414;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.categoria-btn:hover {
+  background-color: #f40612;
+  transform: scale(1.05);
+}
+
+
+
+</style>
+</head>
+<body>
+  <header>
+    <div class="navbar">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="/">Meu Site</a>
+        </div>
+        
+        <!-- Links de Navegação -->
+        <ul class="nav-links">
+            <li><a href="{% url 'pagina_de_confirmacao' %}" class="login-btn">Login/Cadastro</a></li>
+            <li><a href="{% url 'categoria' %}" class="categoria-btn">Categoria</a></li>
+            
+            <!-- Foto de Perfil -->
+            <li>
+                <a href="{% url 'configuracao' %}" class="profile-link">
+                    <div class="profile-pic">
+                        <!-- Foto de perfil do usuário -->
+                        <img src="{{ user.profile_picture.url }}" alt="Foto de perfil" />
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+  </header>
+
+
+
+
+
+<div class="top">
+  <div class="columns">
+    <div class="column is-full featured_wrapper p-0">
+      <img src="https://wallpapercave.com/wp/wp5522079.jpg" class="featured">
+      <div class="title_wrapper">
+        <span class="has-text-white">Trending Today</span>
+        <h1 class="title is-1 has-text-white">Stranger Things</h1>
+        <button class="button is-medium">ASSISTA JÁ</button>
+      </div>
+      <div class="video_wrapper">
+        <div class="video_wrapper">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/dmIFhpQe9Zk?si=tI6q31zOBZjQNd3R&amp;start=5" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+		</div>
+		
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="columns is-multiline p-0 pt-6 last">
+    <div class="column is-full">
+      <p class="has-text-white">Filmes e Séries</p>
+      <a class="nav-link text-dark" href="/usuarios/">usuarios</a>
+      <a class="nav-link text-dark" href="/series/">series</a>
+      <a class="nav-link text-dark" href="/filmes/">filmes</a>
+      <a class="nav-link text-dark" href="/categorias/">categorias</a>
+      <a class="nav-link text-dark" href="/avaliacoes/">avaliações</a>
+      <a class="nav-link text-dark" href="/relatorios/">relatorios</a>
+      <a class="nav-link text-dark" href="/form/">form</a>
+      <a class="nav-link text-dark" href="/upload/">videos</a>
+      <a class="nav-link text-dark" href="/upload/">videos</a>
+      <li><a class="nav-link text-dark" href="{% url 'admin_dashboard' %}">Admin</a></li>
+
+    </div>  
+    <div class="column is-one-quarter">
+      <a href="{% url 'filme1' %}">
+          <img src="https://image.tmdb.org/t/p/w500/tqWF1vSDKXSiQaRaFkep3ofvyzQ.jpg" alt="Filme 1">
+      </a>
+    </div>
+    <div class="column is-one-quarter">
+      <img src="https://image.tmdb.org/t/p/w500/gZZr3TIjlkrlga3F0hx1pDA7COi.jpg.">
+    </div>
+    <div class="column is-one-quarter">
+      <img src="https://cdn32.ntcdn.pro/testme/dle2/posts/2024-07/a5mufmhrL0QBg0JNLPGNwbWENDg.jpg">
+    </div>
+    <div class="column is-one-quarter">
+      <img src="https://cdn32.ntcdn.pro/testme/dle2/posts/2024-07/28w2afrlxhvxnvscdfnmky3t1ji.jpg">
+    </div>
+  </div>
+  <div class="columns last">
+    <div class="column is-one-quarter">
+      <img src="https://cdn32.ntcdn.pro/testme/dle2/posts/2024-07/A7WtrzlvLAhdmXObY9aZCRhtAMs.jpg">
+    </div>
+    <div class="column is-one-quarter">
+      <img src="https://cdn32.ntcdn.pro/testme/dle2/posts/2024-07/u8NwlaCFd3oNJxNjqvMwRj4LiBZ.jpg">
+    </div>
+    <div class="column is-one-quarter">
+      <img src="https://cdn32.ntcdn.pro/testme/dle2/posts/2024-03/A7SBIS42Kmg4FmzDuNvQSPaI3kc.jpg">
+    </div>
+    <div class="column is-one-quarter">
+      <img src="https://cdn32.ntcdn.pro/testme/dle2/posts/2022-11/312608747.jpg">
+    </div>
+  </div>
+</div>
+<div id="loader" class="loader-overlay">
+  <div class="spinner"></div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+  // Efeito de fade-in para os links de navegação
+  window.onload = function() {
+      const navLinks = document.querySelectorAll('.nav-links a');
+      navLinks.forEach((link, index) => {
+          setTimeout(() => {
+              link.style.opacity = '1';
+              link.style.transition = 'opacity 0.5s ease-in';
+          }, index * 200); // Anima os links com um pequeno delay entre eles
+      });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirmação de Cadastro</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            background-image: url("{% static 'images/fundologin.jpg' %}");
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 0;
+        }
+
+        .confirmacao-container {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            color: white;
+            padding: 30px;
+            max-width: 500px;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+            transform: scale(0.9);
+            animation: scaleUp 1s ease-out forwards;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fff;
+            text-transform: uppercase;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #ddd;
+            margin-bottom: 30px;
+            animation: fadeIn 1s ease-in-out 0.5s forwards;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-evenly;
+            gap: 30px;
+        }
+
+        .btn {
+            padding: 15px 40px;
+            background-color: #e50914;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: white;
+            cursor: pointer;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transition: width 0.4s, height 0.4s, top 0.4s, left 0.4s;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .btn:hover::before {
+            width: 0;
+            height: 0;
+            top: 50%;
+            left: 50%;
+        }
+
+        .btn:hover {
+            background-color: #c40812;
+            transform: scale(1.1);
+        }
+
+        .btn1 {
+            background-color: #0071eb;
+        }
+
+        .btn1:hover {
+            background-color: #005fbb;
+        }
+
+        .btn-container .btn1 {
+            transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes scaleUp {
+            0% {
+                transform: scale(0.9);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .confirmacao-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 12px 30px;
+            }
+
+            .button-container {
+                flex-direction: column;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="confirmacao-container">
+        <h1>Aguarde, quase lá!</h1>
+        <p>Seu cadastro está quase pronto! Você pode fazer login ou criar uma nova conta abaixo.</p>
+
+        <div class="button-container">
+            <!-- Botão de Login -->
+            <a href="{% url 'user_login' %}">
+                <button class="btn btn1">Fazer Login</button>
+            </a>
+
+            <!-- Botão de Cadastro -->
+            <a href="{% url 'signup' %}">
+                <button class="btn">Deseja Cadastrar?</button>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Aqui podemos adicionar interatividade adicional se necessário
+        // Exemplo: animar algo, exibir um contador, ou iniciar outras interações
+    </script>
+</body>
+</html>

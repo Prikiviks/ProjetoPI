@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Perfil</title>
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 300px;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-pic {
+            display: block;
+            margin: 0 auto;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid #888;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 5px;
+            margin-top: 5px;
+            background-color: #222;
+            color: white;
+            border: none;
+            border-radius: 3px;
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button {
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #555;
+        }
+
+        .delete-button {
+            background-color: red;
+        }
+
+        .delete-button:hover {
+            background-color: darkred;
+        }
+
+        .message {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .success {
+            background-color: #28a745;
+        }
+
+        .error {
+            background-color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Informações do Perfil</h1>
+
+    {% if usuario %}
+        <p><strong>Nome:</strong> {{ usuario.nome }}</p>
+        <p><strong>E-mail:</strong> {{ usuario.email }}</p>
+        <p><strong>Data de Nascimento:</strong> {{ usuario.data_nascimento }}</p>
+        <p><strong>Endereço:</strong> {{ usuario.endereco }}</p>
+        <p><strong>Plano de Assinatura:</strong> {{ usuario.plano_assinatura }}</p>
+    {% else %}
+        <p>Não há informações de perfil para este usuário.</p>
+    {% endif %}
+<script>
+    // Elementos
+    const saveBtn = document.getElementById('save-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const deleteBtn = document.getElementById('delete-btn');
+    const profilePic = document.getElementById('profile-pic');
+    const messageBox = document.getElementById('message');
+
+    // Função para exibir mensagens
+    function showMessage(type, text) {
+        messageBox.className = 'message ' + type;
+        messageBox.innerHTML = text;
+        messageBox.style.display = 'block';
+        setTimeout(() => {
+            messageBox.style.display = 'none';
+        }, 3000);
+    }
+
+    // Função para salvar perfil
+    saveBtn.addEventListener('click', function () {
+        const nome = document.getElementById('nome').value;
+        const idioma = document.getElementById('idioma').value;
+
+        // Validação simples
+        if (nome === '') {
+            showMessage('error', 'Por favor, insira um nome.');
+            return;
+        }
+
+        showMessage('success', 'Perfil salvo com sucesso!');
+    });
+
+    // Função para cancelar a edição
+    cancelBtn.addEventListener('click', function () {
+        const confirmCancel = confirm('Você tem certeza que deseja cancelar as alterações?');
+        if (confirmCancel) {
+            document.getElementById('nome').value = '';
+            document.getElementById('idioma').value = 'portugues';
+            showMessage('success', 'Edição cancelada.');
+        }
+    });
+
+    // Função para excluir perfil
+    deleteBtn.addEventListener('click', function () {
+        const confirmDelete = confirm('Tem certeza que deseja excluir o perfil? Essa ação não pode ser desfeita.');
+        if (confirmDelete) {
+            showMessage('error', 'Perfil excluído com sucesso.');
+            // Aqui você pode adicionar código para realmente excluir o perfil no sistema
+        }
+    });
+
+    // Simulando alteração dinâmica de imagem de perfil
+    profilePic.addEventListener('click', function () {
+        const newPic = prompt('Insira o URL de uma nova imagem de perfil:');
+        if (newPic) {
+            profilePic.src = newPic;
+        }
+    });
+
+    // Funções adicionais
+    function toggleAutoPlay() {
+        const inicioAutomatico = document.getElementById('inicio-automatico');
+        inicioAutomatico.checked = !inicioAutomatico.checked;
+    }
+
+    function togglePreviews() {
+        const previas = document.getElementById('previas');
+        previas.checked = !previas.checked;
+    }
+
+    // Centenas de pequenas interações (exemplo simplificado)
+    for (let i = 0; i < 100; i++) {
+        console.log("Pequena interação número " + (i + 1));
+    }
+
+    // Simulação de tema escuro/claro
+    function toggleTheme() {
+        const body = document.body;
+        if (body.style.backgroundColor === 'white') {
+            body.style.backgroundColor = 'black';
+            body.style.color = 'white';
+        } else {
+            body.style.backgroundColor = 'white';
+            body.style.color = 'black';
+        }
+    }
+
+    // Ativando o modo tema claro/escuro ao pressionar uma tecla
+    document.addEventListener('keydown', function (event) {
+        if (event.key === 't') {
+            toggleTheme();
+        }
+    });
+</script>
+
+</body>
+</html>

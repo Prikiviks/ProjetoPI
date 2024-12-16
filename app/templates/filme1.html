@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeria de Filmes</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400;800&display=swap");
+
+        body, html {
+            background: #000;
+            margin: 0;
+            font-family: "Montserrat", sans-serif;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        #blockvideo {
+            background-color: #1f1f1f; /* Cinza escuro */
+            max-width: 800px;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1rem;
+            width: 100%;
+        }
+
+        video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            border: 2px solid #f40612; /* Vermelho */
+            margin-bottom: 1rem;
+        }
+
+        .video-title {
+            margin: 1rem 0;
+            font-size: 1.8rem;
+            color: #f40612; /* Vermelho */
+            text-align: center;
+        }
+
+        .play-button {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background-color: #f40612; /* Vermelho */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            margin: 1rem auto;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .play-button:hover {
+            background-color: #fff; /* Branco */
+            color: #b22222; /* Vermelho */
+            transform: scale(1.05);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .rating {
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        .comment-section {
+            margin-top: 2rem;
+            border-top: 1px solid #555;
+            padding-top: 1rem;
+        }
+
+        .comment {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+            background-color: #2a2a2a;
+        }
+
+        .comment-form {
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            header {
+                font-size: 1.5rem;
+            }
+
+            .video-title {
+                font-size: 1.5rem;
+            }
+        }
+        .container-user {
+          display: flex;
+          justify-content: space-between; /* Espaça links e usuário */
+          align-items: center; /* Alinha verticalmente */
+          padding: 1rem; /* Adiciona um espaço interno */
+          background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil */
+          border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Linha inferior */
+        }
+        
+        .linksheader a {
+          color: white; /* Cor dos links */
+          margin-right: 1.5rem; /* Espaçamento entre links */
+          text-decoration: none; /* Remove sublinhado */
+          transition: color 0.3s; /* Transição suave para cor */
+        }
+        
+        .linksheader a:hover {
+          color: #f40612; /* Cor do hover */
+        }
+        
+        .user {
+          background-color: red; /* Corrigido de 'backbackgroud-color' */
+          width: 50px; /* Ajuste para um tamanho melhor */
+          height: 50px; /* Ajuste para um tamanho melhor */
+          border-radius: 50%;
+          border: solid 1px white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+      <div class ="container-user">
+        <div class= "linksheader">
+          <a class="nav-link text-dark" href="{% url 'index' %}">Home</a>
+          <a href="#">Categorias</a>
+          <a href="#">Sobre</a>
+          <a href="#">Contato</a>
+        </div>
+        <div class="user"></div>
+      </div>
+    </header>
+    
+    <div id="blockvideo">
+        <h2 class="video-title">Título do Filme</h2>
+        <video id="mainVideo" controls>
+            <source src="http://localhost:8000/media/videos/videodragon_DsUvqdo.mp4" type="video/mp4">
+            Seu navegador não suporta o elemento de vídeo.
+        </video>
+        <button class="play-button" onclick="togglePlay()">Play/Pause</button>
+
+        <div class="rating">
+            <h3>Avalie este Filme</h3>
+            <label>
+                <input type="radio" name="rating" value="1"> 1
+            </label>
+            <label>
+                <input type="radio" name="rating" value="2"> 2
+            </label>
+            <label>
+                <input type="radio" name="rating" value="3"> 3
+            </label>
+            <label>
+                <input type="radio" name="rating" value="4"> 4
+            </label>
+            <label>
+                <input type="radio" name="rating" value="5"> 5
+            </label>
+            <button class="play-button" onclick="submitRating()">Enviar Avaliação</button>
+        </div>
+
+        <div class="comment-section">
+            <h3>Comentários</h3>
+            <div id="commentsContainer"></div>
+            <div class="comment-form">
+                <textarea id="commentInput" placeholder="Escreva seu comentário aqui..." rows="3"></textarea><br>
+                <button class="play-button" onclick="submitComment()">Enviar Comentário</button>
+            </div>
+        </div>
+    </div>
+    <footer>&copy; 2024 Projetoflix</footer>
+
+    <script>
+        const video = document.getElementById('mainVideo');
+        const commentsContainer = document.getElementById('commentsContainer');
+
+        function togglePlay() {
+            video.paused ? video.play() : video.pause();
+        }
+
+        video.addEventListener('ended', () => {
+            alert('O vídeo terminou!');
+        });
+
+        video.addEventListener('play', () => {
+            console.log('O vídeo está sendo reproduzido');
+        });
+
+        video.addEventListener('pause', () => {
+            console.log('O vídeo está pausado');
+        });
+
+        window.addEventListener('resize', () => {
+            console.log('A janela foi redimensionada');
+        });
+
+        document.body.addEventListener('keydown', (event) => {
+            if (event.key === ' ') {
+                togglePlay();
+            }
+        });
+
+        function submitRating() {
+            const rating = document.querySelector('input[name="rating"]:checked');
+            if (rating) {
+                alert(`Você avaliou o filme com ${rating.value} estrelas!`);
+            } else {
+                alert('Por favor, selecione uma avaliação.');
+            }
+        }
+
+        function submitComment() {
+            const commentInput = document.getElementById('commentInput');
+            const commentText = commentInput.value.trim();
+            if (commentText) {
+                const commentDiv = document.createElement('div');
+                commentDiv.classList.add('comment');
+                commentDiv.textContent = commentText;
+                commentsContainer.appendChild(commentDiv);
+                commentInput.value = ''; // Limpa o campo após enviar
+            } else {
+                alert('Por favor, escreva um comentário.');
+            }
+        }
+
+        // Animações adicionais
+        video.addEventListener('timeupdate', () => {
+            const progress = document.createElement('progress');
+            progress.value = (video.currentTime / video.duration) * 100;
+            progress.max = 100;
+            document.getElementById('blockvideo').appendChild(progress);
+        });
+    </script>
+</body>
+</html>

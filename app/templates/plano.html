@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planos de Pagamento</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #141414; /* Cor de fundo escuro */
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    
+    .container {
+      text-align: center;
+      max-width: 1200px;
+      padding: 0 15px;
+      width: 100%;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      color: #e50914; /* Cor de destaque vermelha */
+      font-weight: bold;
+      animation: fadeInTitle 1s ease-out;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 3rem;
+      color: #ddd;
+      font-weight: 300;
+      animation: fadeInSubtitle 1s ease-out;
+    }
+    
+    .cards {
+      display: flex;
+      justify-content: space-around;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      animation: fadeInCards 1s ease-out;
+    }
+    
+    .card {
+      background-color: #333; /* Cor de fundo dos cards */
+      border-radius: 10px;
+      width: 280px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      opacity: 0;
+      animation: cardReveal 0.5s forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:nth-child(1) {
+      background-color: #e50914; /* Vermelho */
+    }
+    
+    .card:nth-child(2) {
+      background-color: #505050; /* Cinza */
+    }
+    
+    .card:nth-child(3) {
+      background-color: #5f6368; /* Cinza mais escuro */
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    
+    .card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      font-weight: bold;
+      animation: fadeInText 1s ease-out;
+      color: #fff;
+    }
+    
+    .price {
+      font-size: 2.5rem;
+      margin: 1rem 0;
+      color: #fff;
+      font-weight: bold;
+      animation: priceAppear 1s ease-out;
+    }
+    
+    .card ul {
+      list-style: none;
+      text-align: left;
+      padding-left: 0;
+      margin-bottom: 1.5rem;
+    }
+    
+    .card ul li {
+      margin-bottom: 0.5rem;
+      color: #ccc;
+    }
+    
+    .card ul li::before {
+      content: '✓';
+      color: #e50914;
+      margin-right: 8px;
+    }
+    
+    .btn {
+      background-color: #e50914; /* Vermelho */
+      color: #fff;
+      border: none;
+      padding: 12px 25px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      border-radius: 8px;
+      width: 100%;
+      font-weight: bold;
+      text-transform: uppercase;
+      transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s ease;
+    }
+    
+    .btn:hover {
+      background-color: #c40812;
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    @keyframes fadeInTitle {
+      0% {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInSubtitle {
+      0% {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInCards {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes cardReveal {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes fadeInText {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes priceAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .cards {
+        flex-direction: column;
+        align-items: center;
+      }
+    
+      .card {
+        width: 100%;
+        margin-bottom: 2rem;
+      }
+    }
+    
+    
+  </style>
+</head>
+<body>
+  
+  <div class="container">
+    <h1>Escolha seu pagamento</h1>
+    <h2>Plano de site mensal</h2>
+    
+    <div class="cards">
+      <!-- Plano Básico -->
+      <div class="card">
+        <h3>Plano Básico</h3>
+        <div class="price">R$19,90</div>
+        <ul>
+          <li>1 dispositivo</li>
+          <li>Sem propagandas</li>
+          <li>Acesso limitado a conteúdos exclusivos</li>
+        </ul>
+        <!-- Formulário com link para o plano -->
+        <form action="{% url 'selecionar_plano' planos.0.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">Compre Agora</button>
+        </form>
+      </div>
+      
+      <!-- Plano Intermediário -->
+      <div class="card">
+        <h3>Plano Intermediário</h3>
+        <div class="price">R$39,90</div>
+        <ul>
+          <li>3 dispositivos</li>
+          <li>Sem propagandas</li>
+          <li>Acesso completo a conteúdos exclusivos</li>
+          <li>Assistir em HD</li>
+        </ul>
+        <!-- Formulário com link para o plano -->
+        <form action="{% url 'selecionar_plano' planos.1.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">Compre Agora</button>
+        </form>
+      </div>
+      
+      <!-- Plano Avançado -->
+      <div class="card">
+        <h3>Plano Avançado</h3>
+        <div class="price">R$59,90</div>
+        <ul>
+          <li>5 dispositivos</li>
+          <li>Sem propagandas</li>
+          <li>Acesso completo a conteúdos exclusivos</li>
+          <li>Assistir em 4K</li>
+          <li>Download para assistir offline</li>
+        </ul>
+        <!-- Formulário com link para o plano -->
+        <form action="{% url 'selecionar_plano' planos.2.id %}" method="POST">
+          {% csrf_token %}
+          <button type="submit" class="btn">Compre Agora</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

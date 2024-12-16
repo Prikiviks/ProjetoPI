@@ -1,0 +1,15 @@
+<form method="POST">
+    {% csrf_token %}
+    <h2>Escolha o seu plano:</h2>
+    <select name="plano_id">
+        {% for plano in planos %}
+            <option value="{{ plano.id }}">{{ plano.nome }} - R$ {{ plano.preco }}</option>
+        {% endfor %}
+    </select>
+
+    <h2>Escolha o método de pagamento:</h2>
+    <input type="radio" id="credito" name="metodo_pagamento" value="Cartão de Crédito"> Cartão de Crédito
+    <input type="radio" id="paypal" name="metodo_pagamento" value="PayPal"> PayPal
+
+    <button type="submit">Finalizar Pagamento</button>
+</form>

@@ -1,0 +1,148 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuários</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: red;
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: red;
+            cursor: pointer;
+        }
+
+        td {
+            background-color: black;
+            color: white;
+        }
+
+        tr:nth-child(even) td {
+            background-color: #333;
+        }
+
+        tr:hover td {
+            background-color: #555;
+        }
+
+        .sorted-asc::after {
+            content: ' \25B2'; /* Up arrow */
+        }
+
+        .sorted-desc::after {
+            content: ' \25BC'; /* Down arrow */
+        }
+        .linhatab{
+            inline-block: true;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Filmes</h1>
+    <table id="userTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">ID</th>
+                <th onclick="sortTable(1)">Titulo</th>
+                <th onclick="sortTable(2)">Diretor</th>
+                <th onclick="sortTable(3)">Ano</th>
+                <th onclick="sortTable(4)">Gênero</th>
+                <th onclick="sortTable(5)">Sinopse</th>
+                <th onclick="sortTable(6)">Elenco</th>
+                <th onclick="sortTable(7)">Duração</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% if filmes %}
+                {% for filmes in filmes %}
+                <tr>
+                    <td>{{filmes.id }}</td>
+                    <td>{{filmes.titulo }}</td>
+                    <td>{{filmes.diretor }}</td>
+                    <td>{{filmes.ano_lancamento }}</td>
+                    <td>{{filmes.genero }}</td>
+                    <td>{{filmes.sinopse }}</td>
+                    <td>{{filmes.elenco }}</td>
+                    <td class = 'linhatab'>{{filmes.duracao }}<h4>Min</h4></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="6">Nenhum filme encontrado.</td>
+                </tr>
+            {% endif %}
+            <script>
+                function sortTable(n) {
+                    var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
+                    table = document.getElementById("userTable");
+                    switching = true;
+                    dir = "asc"; 
+                    while (switching) {
+                        switching = false;
+                        rows = table.rows;
+                        for (i = 1; i < (rows.length - 1); i++) {
+                            shouldSwitch = false;
+                            x = rows[i].getElementsByTagName("TD")[n];
+                            y = rows[i + 1].getElementsByTagName("TD")[n];
+                            if (dir == "asc") {
+                                if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                                    shouldSwitch = true;
+                                    break;
+                                }
+                            } else if (dir == "desc") {
+                                if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                                    shouldSwitch = true;
+                                    break;
+                                }
+                            }
+                        }
+                        if (shouldSwitch) {
+                            rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                            switching = true;
+                            switchcount++; 
+                        } else {
+                            if (switchcount == 0 && dir == "asc") {
+                                dir = "desc";
+                                switching = true;
+                            }
+                        }
+                    }
+                    var headers = table.getElementsByTagName("TH");
+                    for (i = 0; i < headers.length; i++) {
+                        headers[i].classList.remove("sorted-asc", "sorted-desc");
+                    }
+                    if (dir == "asc") {
+                        headers[n].classList.add("sorted-asc");
+                    } else {
+                        headers[n].classList.add("sorted-desc");
+                    }
+                }
+            </script>
+        </tbody>
+    </table>
+</body>
+</html>

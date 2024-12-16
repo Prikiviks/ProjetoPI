@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categorias - Projetofilx</title>
+    <style>
+        body {
+            background-color: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+            padding-top: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background-color: #222;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            font-size: 18px;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        .card.acao { background-color: #e74c3c; }
+        .card.comedia { background-color: #f1c40f; }
+        .card.drama { background-color: #3498db; }
+        .card.ficcao { background-color: #9b59b6; }
+        .card.terror { background-color: #2ecc71; }
+        .card.romance { background-color: #e67e22; }
+        .card.documentario { background-color: #95a5a6; }
+        .card.anime { background-color: #e91e63; }
+
+        /* Ajuste responsivo */
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+    .container-user {
+        display: flex;
+        justify-content: space-between; /* Espaça links e usuário */
+        align-items: center; /* Alinha verticalmente */
+        padding: 1rem; /* Adiciona um espaço interno */
+        background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Linha inferior */
+      }
+      
+      .linksheader a {
+        color: white; /* Cor dos links */
+        margin-right: 1.5rem; /* Espaçamento entre links */
+        text-decoration: none; /* Remove sublinhado */
+        transition: color 0.3s; /* Transição suave para cor */
+      }
+      
+      .linksheader a:hover {
+        color: #f40612; /* Cor do hover */
+      }
+      
+      .user {
+        background-color: red; /* Corrigido de 'backbackgroud-color' */
+        width: 50px; /* Ajuste para um tamanho melhor */
+        height: 50px; /* Ajuste para um tamanho melhor */
+        border-radius: 50%;
+        border: solid 1px white;
+      }
+      .imguser{
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: red;
+        margin-right: 10px;
+      }
+    </style>
+</head>
+<body>
+ 
+</head>
+<body>
+<header>
+    <div class ="container-user">
+        <div class= "linksheader">
+          <a href="{% url 'index'%}">Home</a>
+          <a href="{% url 'categoria'%}">Categorias</a>
+          <a href="#">Sobre</a>
+          <a href="#">Contato</a>
+        </div>
+        <div class="user">
+          <a href="{% url 'configuracao' %}">
+              <img class = 'imguser'src="data:image/jpeg;base64,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" alt="User">
+          </a>
+      </div>
+
+</header>
+<div class="container">
+    <h1>Categorias</h1>
+    <div class="grid">
+        <div class="card acao" id="acao">Ação</div>
+        <div class="card comedia" id="comedia">Comédia</div>
+        <div class="card drama" id="drama">Drama</div>
+        <div class="card ficcao" id="ficcao">Ficção Científica</div>
+        <div class="card terror" id="terror">Terror</div>
+        <div class="card romance" id="romance">Romance</div>
+        <div class="card documentario" id="documentario">Documentário</div>
+        <div class="card anime" id="anime">Anime</div>
+        <div class="card acao" id="aventura">Aventura</div>
+        <div class="card comedia" id="sitcom">Sitcom</div>
+        <div class="card drama" id="suspense">Suspense</div>
+        <div class="card ficcao" id="fantasia">Fantasia</div>
+        <div class="card terror" id="misterio">Mistério</div>
+        <div class="card romance" id="historico">Histórico</div>
+        <div class="card documentario" id="biografia">Biografia</div>
+        <div class="card anime" id="animacao">Animação</div>
+    </div>
+</div>
+
+<script>
+    // Elementos dos cards
+    const cards = document.querySelectorAll('.card');
+
+    // Exibir alerta ao clicar em uma categoria
+    cards.forEach(card => {
+        card.addEventListener('click', () => {
+            alert(`Você escolheu a categoria: ${card.textContent}`);
+        });
+    });
+
+    // Função para alterar aleatoriamente a cor de fundo de um card ao passar o mouse
+    cards.forEach(card => {
+        card.addEventListener('mouseover', () => {
+            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+            card.style.backgroundColor = randomColor;
+        });
+    });
+
+    // Função para restaurar a cor original ao remover o mouse
+    cards.forEach(card => {
+        card.addEventListener('mouseout', () => {
+            resetCardColor(card);
+        });
+    });
+
+    // Função para resetar cor dos cards para cor inicial
+    function resetCardColor(card) {
+        const colorClass = card.classList[1]; // Recupera a cor original da classe
+        switch(colorClass) {
+            case 'acao':
+                card.style.backgroundColor = '#e74c3c';
+                break;
+            case 'comedia':
+                card.style.backgroundColor = '#f1c40f';
+                break;
+            case 'drama':
+                card.style.backgroundColor = '#3498db';
+                break;
+            case 'ficcao':
+                card.style.backgroundColor = '#9b59b6';
+                break;
+            case 'terror':
+                card.style.backgroundColor = '#2ecc71';
+                break;
+            case 'romance':
+                card.style.backgroundColor = '#e67e22';
+                break;
+            case 'documentario':
+                card.style.backgroundColor = '#95a5a6';
+                break;
+            case 'anime':
+                card.style.backgroundColor = '#e91e63';
+                break;
+        }
+    }
+
+    // Função que simula salvar a categoria selecionada (apenas exemplo)
+    function saveCategory(category) {
+        console.log(`Categoria ${category} foi salva!`);
+    }
+
+    // Função que simula a escolha de centenas de categorias aleatórias
+    function chooseRandomCategory() {
+        const categories = ['Ação', 'Comédia', 'Drama', 'Ficção Científica', 'Terror', 'Romance', 'Documentário', 'Anime', 'Aventura', 'Sitcom', 'Suspense', 'Fantasia', 'Mistério', 'Histórico', 'Biografia', 'Animação'];
+        const randomIndex = Math.floor(Math.random() * categories.length);
+        return categories[randomIndex];
+    }
+
+    // Simulando centenas de interações com categorias (loop)
+    for (let i = 0; i < 100; i++) {
+        const randomCategory = chooseRandomCategory();
+        console.log(`Interação número ${i + 1}: Categoria escolhida foi ${randomCategory}`);
+    }
+
+    // Função que altera dinamicamente o texto e cor de um card quando um botão de controle é pressionado
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'r') {
+            cards.forEach(card => {
+                const randomText = chooseRandomCategory();
+                const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16);
+                card.textContent = randomText;
+                card.style.backgroundColor = randomColor;
+            });
+        }
+    });
+
+    // Função para alterar dinamicamente o tema da página
+    function toggleTheme() {
+        const body = document.body;
+        if (body.style.backgroundColor === 'black') {
+            body.style.backgroundColor = 'white';
+            body.style.color = 'black';
+        } else {
+            body.style.backgroundColor = 'black';
+            body.style.color = 'white';
+        }
+    }
+
+    // Ativa/desativa o tema claro/escuro ao pressionar a tecla "t"
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 't') {
+            toggleTheme();
+        }
+    });
+
+    // Adicionando funcionalidades repetidas como simulação de "centenas" de scripts
+    for (let i = 0; i < 100; i++) {
+        console.log(`Função de simulação número ${i + 1}`);
+    }
+
+</script>
+
+</body>
+</html>
