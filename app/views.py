@@ -6,6 +6,12 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from .models import Usuario, Pagamento, Plano, Avaliacao, Filme, Serie, Categoria, Relatorio, Video, UserProfile
 from .forms import UsuarioForm, FilmeForm, SerieForm, AvaliacaoForm, CategoriaForm, RelatorioForm, VideoForm
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+
+# Continue with other views...
 import json
 from django.utils.decorators import method_decorator
 
@@ -15,30 +21,7 @@ class IndexView(TemplateView):
 def serve_admin_html(request):
     return render(request, 'admin.html')
 
-@login_required
-def configuracao_view(request):
-    try:
-        usuario = Usuario.objects.get(user=request.user)
-    except Usuario.DoesNotExist:
-        usuario = None
 
-    if request.method == 'POST':
-        nome = request.POST.get('nome')
-        email = request.POST.get('email')
-        data_nascimento = request.POST.get('data_nascimento')
-        endereco = request.POST.get('endereco')
-        plano_assinatura = request.POST.get('plano_assinatura')
-
-        if usuario:
-            usuario.nome = nome
-            usuario.email = email
-            usuario.data_nascimento = data_nascimento
-            usuario.endereco = endereco
-            usuario.plano_assinatura = plano_assinatura
-            usuario.save()
-        return redirect('configuracao')
-
-    return render(request, 'configuracao.html', {'usuario': usuario})
 
 class Filme1View(TemplateView):
     template_name = 'filme1.html'
@@ -368,32 +351,28 @@ class CategoriaView(View):
     def get(self, request):
         return render(request, 'categoria.html')
 
-@method_decorator(login_required, name='dispatch')
+
+
 class ConfiguracaoView(View):
+    @method_decorator(login_required, name='dispatch')
     def get(self, request):
-        from .models import Usuario  # Importação local
-        try:
-            usuario = request.user.usuario
-        except Usuario.DoesNotExist:
-            usuario = None
+        usuario = get_object_or_404(Usuario, user=request.user)
         return render(request, 'configuracoes.html', {'usuario': usuario})
 
+    @method_decorator(login_required, name='dispatch')
     def post(self, request):
-        from .models import Usuario  # Importação local
-        try:
-            usuario = request.user.usuario
-        except Usuario.DoesNotExist:
-            usuario = None
-
-        if usuario:
-            usuario.nome = request.POST.get('nome')
-            usuario.email = request.POST.get('email')
-            usuario.data_nascimento = request.POST.get('data_nascimento')
-            usuario.endereco = request.POST.get('endereco')
-            usuario.plano_assinatura = request.POST.get('plano_assinatura')
-            usuario.save()
-        
+        usuario = get_object_or_404(Usuario, user=request.user)
+        usuario.nome = request.POST.get('nome')
+        usuario.email = request.POST.get('email')
+        usuario.data_nascimento = request.POST.get('data_nascimento')
+        usuario.endereco = request.POST.get('endereco')
+        usuario.plano_assinatura = request.POST.get('plano_assinatura')
+        usuario.save()
         return redirect('configuracao')
+
+
+
+
 
 def selecionar_plano(request, plano_id):
     try:
