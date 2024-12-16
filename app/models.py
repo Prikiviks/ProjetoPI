@@ -19,7 +19,7 @@ class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100)
     email = models.EmailField()
-    senha = models.CharField(max_length=100)  # Add this line
+    senha = models.CharField(max_length=100)  # Coluna senha
     data_nascimento = models.DateField()
     endereco = models.CharField(max_length=255)
     plano_assinatura = models.CharField(max_length=50)

@@ -18,7 +18,7 @@ def serve_admin_html(request):
 @login_required
 def configuracao_view(request):
     try:
-        usuario = request.user.usuario
+        usuario = Usuario.objects.get(user=request.user)
     except Usuario.DoesNotExist:
         usuario = None
 
