@@ -4,9 +4,10 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from .models import Usuario, Pagamento, Plano, Avaliacao, Filme, Serie, Categoria, Relatorio, Video
+from .models import Usuario, Pagamento, Plano, Avaliacao, Filme, Serie, Categoria, Relatorio, Video, UserProfile
 from .forms import UsuarioForm, FilmeForm, SerieForm, AvaliacaoForm, CategoriaForm, RelatorioForm, VideoForm
 import json
+from django.utils.decorators import method_decorator
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -47,12 +48,6 @@ def index_view(request):
     is_user_logged_in = request.user.is_authenticated
     return render(request, 'index.html', {'user_logged_in': is_user_logged_in})
 
-# views.py
-from django.contrib.auth import authenticate, login
-
-# views.py
-from django.contrib.auth import authenticate, login
-
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -64,14 +59,6 @@ def user_login(request):
         else:
             return render(request, 'registration/login.html', {'error': 'Credenciais inválidas'})
     return render(request, 'registration/login.html')
-
-# views.py
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
-
-# views.py
-from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
 
 def user_signup(request):
     if request.method == 'POST':
@@ -86,8 +73,7 @@ def user_signup(request):
         else:
             return render(request, 'signup.html', {'error': 'Preencha todos os campos corretamente.'})
     return render(request, 'signup.html')
-    
-    return render(request, 'signup.html')
+
 def payment_view(request):
     if not request.user.is_authenticated:
         return redirect('user_login')
@@ -377,26 +363,23 @@ def login_view(request):
         form = AuthenticationForm()
     
     return render(request, 'login.html', {'form': form})
-# views.py
-from django.views import View
-from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from .models import Usuario
-
-# views.py
-from django.views import View
-from django.shortcuts import render
 
 class CategoriaView(View):
     def get(self, request):
         return render(request, 'categoria.html')
+
 @method_decorator(login_required, name='dispatch')
 class ConfiguracaoView(View):
     def get(self, request):
-        return render(request, 'configuracoes.html')
+        from .models import Usuario  # Importação local
+        try:
+            usuario = request.user.usuario
+        except Usuario.DoesNotExist:
+            usuario = None
+        return render(request, 'configuracoes.html', {'usuario': usuario})
 
     def post(self, request):
+        from .models import Usuario  # Importação local
         try:
             usuario = request.user.usuario
         except Usuario.DoesNotExist:
@@ -411,6 +394,7 @@ class ConfiguracaoView(View):
             usuario.save()
         
         return redirect('configuracao')
+
 def selecionar_plano(request, plano_id):
     try:
         plano = Plano.objects.get(id=plano_id)

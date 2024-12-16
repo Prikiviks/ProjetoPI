@@ -90,7 +90,8 @@ urlpatterns = [
     path('relatorios/<int:pk>/excluir/', RelatorioDeleteView.as_view(), name='relatorio_delete'),
 
     path('filme1/', Filme1View.as_view(), name='filme1'),  # View Filme1 configurada corretamente
-    path('configuracao/', ConfiguracaoView.as_view(), name='configuracao'), 
+    path('configuracaoes/', ConfiguracaoView.as_view(), name='configuracaoes'), 
+    path('configuracao/', ConfiguracaoView.as_view(), name='configuracao'),
     path('categoria/', CategoriaView.as_view(), name='categoria'),  # View Filme1 configurada corretamente
 
 
@@ -108,6 +109,7 @@ urlpatterns = [
     path('selecionar-plano/<int:plano_id>/', selecionar_plano, name='selecionar_plano'),
     path('confirmacao/', pagina_de_confirmacao, name='pagina_de_confirmacao'),
     path('', IndexView.as_view(), name='index'),  # Página principal
+    
  
 
 ]

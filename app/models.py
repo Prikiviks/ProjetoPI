@@ -12,20 +12,30 @@ from django.db import models
 
 
 
-# models.py
-from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import User
 
 class Usuario(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     nome = models.CharField(max_length=100)
     email = models.EmailField()
+    senha = models.CharField(max_length=100)  # Add this line
     data_nascimento = models.DateField()
     endereco = models.CharField(max_length=255)
     plano_assinatura = models.CharField(max_length=50)
 
 
+from django.db import models
+from django.contrib.auth.models import User
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    nome = models.CharField(max_length=100)
+    email = models.EmailField()
+    data_nascimento = models.DateField()
+    endereco = models.CharField(max_length=255)
+    plano_assinatura = models.CharField(max_length=100)
+    profile_picture = models.ImageField(upload_to='profile_pictures/', null=True, blank=True)
 
 
 class Plano(models.Model):
