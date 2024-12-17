@@ -19,8 +19,8 @@
         }
 
         #blockvideo {
-            background-color: #1f1f1f;
-            max-width: 1000px;
+            background-color: #1f1f1f; /* Cinza escuro */
+            max-width: 800px;
             margin: 5% auto;
             padding: 2rem;
             border-radius: 12px;
@@ -39,21 +39,21 @@
             width: 100%;
             height: auto;
             border-radius: 8px;
-            border: 2px solid #f40612;
+            border: 2px solid #f40612; /* Vermelho */
             margin-bottom: 1rem;
         }
 
         .video-title {
             margin: 1rem 0;
-            font-size: 2rem;
-            color: #f40612;
+            font-size: 1.8rem;
+            color: #f40612; /* Vermelho */
             text-align: center;
         }
 
         .play-button {
             display: inline-block;
-            padding: 0.5rem 2rem;
-            background-color: #f40612;
+            padding: 0.5rem 1.5rem;
+            background-color: #f40612; /* Vermelho */
             color: #fff;
             border: none;
             border-radius: 5px;
@@ -61,12 +61,12 @@
             transition: background 0.3s, transform 0.3s;
             margin: 1rem auto;
             text-align: center;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
         }
 
         .play-button:hover {
-            background-color: #fff;
-            color: #b22222;
+            background-color: #fff; /* Branco */
+            color: #b22222; /* Vermelho */
             transform: scale(1.05);
         }
 
@@ -105,47 +105,46 @@
                 font-size: 1.5rem;
             }
         }
-
         .container-user {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+          display: flex;
+          justify-content: space-between; /* Espaça links e usuário */
+          align-items: center; /* Alinha verticalmente */
+          padding: 1rem; /* Adiciona um espaço interno */
+          background-color: rgba(255, 255, 255, 0.1); /* Fundo sutil */
+          border-bottom: 1px solid rgba(255, 255, 255, 0.3); /* Linha inferior */
         }
-
+        
         .linksheader a {
-            color: white;
-            margin-right: 1.5rem;
-            text-decoration: none;
-            transition: color 0.3s;
+          color: white; /* Cor dos links */
+          margin-right: 1.5rem; /* Espaçamento entre links */
+          text-decoration: none; /* Remove sublinhado */
+          transition: color 0.3s; /* Transição suave para cor */
         }
-
+        
         .linksheader a:hover {
-            color: #f40612;
+          color: #f40612; /* Cor do hover */
         }
-
+        
         .user {
-            background-color: red;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: solid 1px white;
+          background-color: red; /* Corrigido de 'backbackgroud-color' */
+          width: 50px; /* Ajuste para um tamanho melhor */
+          height: 50px; /* Ajuste para um tamanho melhor */
+          border-radius: 50%;
+          border: solid 1px white;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container-user">
-            <div class="linksheader">
-                <a class="nav-link text-dark" href="{% url 'index' %}">Home</a>
-                <a href="#">Categorias</a>
-                <a href="#">Sobre</a>
-                <a href="#">Contato</a>
-            </div>
-            <div class="user"></div>
+      <div class ="container-user">
+        <div class= "linksheader">
+          <a class="nav-link text-dark" href="{% url 'index' %}">Home</a>
+          <a href="#">Categorias</a>
+          <a href="#">Sobre</a>
+          <a href="#">Contato</a>
         </div>
+        <div class="user"></div>
+      </div>
     </header>
     
     <div id="blockvideo">
@@ -178,26 +177,11 @@
 
         <div class="comment-section">
             <h3>Comentários</h3>
-            <div id="commentsContainer">
-                {% for comment in comments %}
-                    <div class="comment">
-                        <p><strong>{{ comment.user.username }}</strong>: {{ comment.content }}</p>
-                        <p class="is-size-7 has-text-grey">{{ comment.created_at }}</p>
-                    </div>
-                {% endfor %}
+            <div id="commentsContainer"></div>
+            <div class="comment-form">
+                <textarea id="commentInput" placeholder="Escreva seu comentário aqui..." rows="3"></textarea><br>
+                <button class="play-button" onclick="submitComment()">Enviar Comentário</button>
             </div>
-            
-            {% if user.is_authenticated %}
-                <div class="comment-form">
-                    <form method="post" action="{% url 'add_comment' movie.id %}">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="play-button">Enviar Comentário</button>
-                    </form>
-                </div>
-            {% else %}
-                <p>Você precisa estar logado para comentar. <a href="{% url 'login' %}">Login</a></p>
-            {% endif %}
         </div>
     </div>
     <footer>&copy; 2024 Projetoflix</footer>

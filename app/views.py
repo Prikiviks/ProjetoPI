@@ -4,7 +4,14 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from .models import Usuario, Pagamento, Plano, Avaliacao, Filme, Serie, Categoria, Relatorio, Video, UserProfile
 from .forms import UsuarioForm, FilmeForm, SerieForm, AvaliacaoForm, CategoriaForm, RelatorioForm, VideoForm
+
+class IndexView(TemplateView):
+    template_name = 'index.html'
+
+
+# Continue with other views...
 import json
 from django.utils.decorators import method_decorator
 
@@ -13,6 +20,8 @@ class IndexView(TemplateView):
 
 def serve_admin_html(request):
     return render(request, 'admin.html')
+
+
 
 class Filme1View(TemplateView):
     template_name = 'filme1.html'
@@ -52,8 +61,6 @@ def payment_view(request):
     if not request.user.is_authenticated:
         return redirect('user_login')
 
-    from .models import Usuario, Pagamento, Plano
-
     usuario = Usuario.objects.get(user=request.user)
     planos = Plano.objects.all()
     if request.method == 'POST':
@@ -85,7 +92,6 @@ def signup_view(request):
 
 class UsuarioListView(View):
     def get(self, request):
-        from .models import Usuario
         usuarios = Usuario.objects.all()
         return render(request, 'usuario_list.html', {'usuarios': usuarios})
 
@@ -103,13 +109,11 @@ class UsuarioCreateView(View):
 
 class UsuarioUpdateView(View):
     def get(self, request, pk):
-        from .models import Usuario
         usuario = get_object_or_404(Usuario, pk=pk)
         form = UsuarioForm(instance=usuario)
         return render(request, 'usuario_form.html', {'form': form})
 
     def post(self, request, pk):
-        from .models import Usuario
         usuario = get_object_or_404(Usuario, pk=pk)
         form = UsuarioForm(request.POST, instance=usuario)
         if form.is_valid():
@@ -119,14 +123,12 @@ class UsuarioUpdateView(View):
 
 class UsuarioDeleteView(View):
     def post(self, request, pk):
-        from .models import Usuario
         usuario = Usuario.objects.get(pk=pk)
         usuario.delete()
         return redirect('usuario_list')
 
 class FilmeListView(View):
     def get(self, request):
-        from .models import Filme
         filmes = Filme.objects.all()
         return render(request, 'filme_list.html', {'filmes': filmes})
 
@@ -144,13 +146,11 @@ class FilmeCreateView(View):
 
 class FilmeUpdateView(View):
     def get(self, request, pk):
-        from .models import Filme
         filme = Filme.objects.get(pk=pk)
         form = FilmeForm(instance=filme)
         return render(request, 'filme_form.html', {'form': form})
 
     def post(self, request, pk):
-        from .models import Filme
         filme = Filme.objects.get(pk=pk)
         form = FilmeForm(request.POST, instance=filme)
         if form.is_valid():
@@ -160,14 +160,12 @@ class FilmeUpdateView(View):
 
 class FilmeDeleteView(View):
     def post(self, request, pk):
-        from .models import Filme
         filme = Filme.objects.get(pk=pk)
         filme.delete()
         return redirect('filme_list')
 
 class SerieListView(View):
     def get(self, request):
-        from .models import Serie
         series = Serie.objects.all()
         return render(request, 'serie_list.html', {'series': series})
 
@@ -185,13 +183,11 @@ class SerieCreateView(View):
 
 class SerieUpdateView(View):
     def get(self, request, pk):
-        from .models import Serie
         serie = Serie.objects.get(pk=pk)
         form = SerieForm(instance=serie)
         return render(request, 'serie_form.html', {'form': form})
 
     def post(self, request, pk):
-        from .models import Serie
         serie = Serie.objects.get(pk=pk)
         form = SerieForm(request.POST, instance=serie)
         if form.is_valid():
@@ -201,14 +197,12 @@ class SerieUpdateView(View):
 
 class SerieDeleteView(View):
     def post(self, request, pk):
-        from .models import Serie
         serie = Serie.objects.get(pk=pk)
         serie.delete()
         return redirect('serie_list')
 
 class AvaliacaoListView(View):
     def get(self, request):
-        from .models import Avaliacao
         avaliacoes = Avaliacao.objects.all()
         return render(request, 'avaliacao_list.html', {'avaliacoes': avaliacoes})
 
@@ -226,13 +220,11 @@ class AvaliacaoCreateView(View):
 
 class AvaliacaoUpdateView(View):
     def get(self, request, pk):
-        from .models import Avaliacao
         avaliacao = Avaliacao.objects.get(pk=pk)
         form = AvaliacaoForm(instance=avaliacao)
         return render(request, 'avaliacao_form.html', {'form': form})
 
     def post(self, request, pk):
-        from .models import Avaliacao
         avaliacao = Avaliacao.objects.get(pk=pk)
         form = AvaliacaoForm(request.POST, instance=avaliacao)
         if form.is_valid():
@@ -242,14 +234,12 @@ class AvaliacaoUpdateView(View):
 
 class AvaliacaoDeleteView(View):
     def post(self, request, pk):
-        from .models import Avaliacao
         avaliacao = Avaliacao.objects.get(pk=pk)
         avaliacao.delete()
         return redirect('avaliacao_list')
 
 class CategoriaListView(View):
     def get(self, request):
-        from .models import Categoria
         categorias = Categoria.objects.all()
         return render(request, 'categoria_list.html', {'categorias': categorias})
 
@@ -267,13 +257,11 @@ class CategoriaCreateView(View):
 
 class CategoriaUpdateView(View):
     def get(self, request, pk):
-        from .models import Categoria
         categoria = Categoria.objects.get(pk=pk)
         form = CategoriaForm(instance=categoria)
         return render(request, 'categoria_form.html', {'form': form})
 
     def post(self, request, pk):
-        from .models import Categoria
         categoria = Categoria.objects.get(pk=pk)
         form = CategoriaForm(request.POST, instance=categoria)
         if form.is_valid():
@@ -283,14 +271,12 @@ class CategoriaUpdateView(View):
 
 class CategoriaDeleteView(View):
     def post(self, request, pk):
-        from .models import Categoria
         categoria = Categoria.objects.get(pk=pk)
         categoria.delete()
         return redirect('categoria_list')
 
 class RelatorioListView(View):
     def get(self, request):
-        from .models import Relatorio
         relatorios = Relatorio.objects.all()
         return render(request, 'relatorio_list.html', {'relatorios': relatorios})
 
@@ -308,13 +294,11 @@ class RelatorioCreateView(View):
 
 class RelatorioUpdateView(View):
     def get(self, request, pk):
-        from .models import Relatorio
         relatorio = Relatorio.objects.get(pk=pk)
         form = RelatorioForm(instance=relatorio)
         return render(request, 'relatorio_form.html', {'form': form})
 
     def post(self, request, pk):
-        from .models import Relatorio
         relatorio = Relatorio.objects.get(pk=pk)
         form = RelatorioForm(request.POST, instance=relatorio)
         if form.is_valid():
@@ -324,7 +308,6 @@ class RelatorioUpdateView(View):
 
 class RelatorioDeleteView(View):
     def post(self, request, pk):
-        from .models import Relatorio
         relatorio = Relatorio.objects.get(pk=pk)
         relatorio.delete()
         return redirect('relatorio_list')
@@ -341,12 +324,10 @@ def upload_video(request):
     return render(request, 'upload_video.html', {'form': form})
 
 def video_list(request):
-    from .models import Video
     videos = Video.objects.all()
     return render(request, 'video_list.html', {'videos': videos})
 
 def plano_view(request):
-    from .models import Plano
     planos = Plano.objects.all()[:3]
     return render(request, 'plano.html', {'planos': planos})
 
@@ -370,16 +351,16 @@ class CategoriaView(View):
     def get(self, request):
         return render(request, 'categoria.html')
 
+
+
 class ConfiguracaoView(View):
     @method_decorator(login_required, name='dispatch')
     def get(self, request):
-        from .models import Usuario
         usuario = get_object_or_404(Usuario, user=request.user)
         return render(request, 'configuracoes.html', {'usuario': usuario})
 
     @method_decorator(login_required, name='dispatch')
     def post(self, request):
-        from .models import Usuario
         usuario = get_object_or_404(Usuario, user=request.user)
         usuario.nome = request.POST.get('nome')
         usuario.email = request.POST.get('email')
@@ -389,8 +370,11 @@ class ConfiguracaoView(View):
         usuario.save()
         return redirect('configuracao')
 
+
+
+
+
 def selecionar_plano(request, plano_id):
-    from .models import Plano
     try:
         plano = Plano.objects.get(id=plano_id)
         request.session['plano_selecionado'] = plano.id
@@ -402,7 +386,6 @@ def selecionar_plano(request, plano_id):
         return redirect('plano_view')
 
 def pagina_de_confirmacao(request):
-    from .models import Plano
     plano_id = request.session.get('plano_selecionado')
     
     if plano_id:
