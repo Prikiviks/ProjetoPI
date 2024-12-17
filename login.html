@@ -1,0 +1,272 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Netflix</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: #000;
+            background-image: url("{% static 'images/fundologin.jpg' %}");
+            background-size: cover;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        body::before, body::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            z-index: 0;
+        }
+
+        .feixe {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            stroke: #e50914;
+            stroke-width: 10;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            animation: desenharFeixe 1.5s ease-out forwards, esconderFeixe 1.5s ease-out 1s forwards;
+            z-index: 2;
+        }
+
+        @keyframes desenharFeixe {
+            0% {
+                stroke-dasharray: 0, 300;
+                opacity: 1;
+            }
+            100% {
+                stroke-dasharray: 300, 300;
+                opacity: 1;
+            }
+        }
+
+        @keyframes esconderFeixe {
+            0% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0;
+            }
+        }
+
+        .form-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 450px;
+            padding: 50px;
+            background-color: rgba(0, 0, 0, 0.85);
+            border-radius: 8px;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(0.8);
+            animation: aparecerFormulario 1s ease-out forwards, efeitoFormulario 1.5s ease-out 1.5s forwards;
+            z-index: 4;
+        }
+
+        @keyframes aparecerFormulario {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes efeitoFormulario {
+            0% {
+                transform: scale(0.95);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .form-wrapper.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1);
+        }
+
+        .form-wrapper h2 {
+            color: #fff;
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .form-control {
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .form-control input {
+            width: 100%;
+            padding: 15px 20px;
+            background: #333;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .form-control input:focus {
+            background: #e50914;
+            border-color: #e50914;
+            outline: none;
+        }
+
+        .form-control input::placeholder {
+            color: transparent;
+        }
+
+        .form-control label {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            pointer-events: none;
+            color: #8c8c8c;
+            transition: all 0.1s ease;
+        }
+
+        .form-control input:focus ~ label,
+        .form-control input:valid ~ label {
+            font-size: 0.75rem;
+            transform: translateY(-130%);
+            color: #fff;
+        }
+
+        form button {
+            width: 100%;
+            padding: 16px 0;
+            background: #e50914;
+            color: white;
+            font-weight: 600;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        form button:hover {
+            background: #c40812;
+        }
+
+        .form-help {
+            margin-top: 15px;
+            color: #b3b3b3;
+        }
+
+        small {
+            color: #b3b3b3;
+            text-align: center;
+            display: block;
+            margin-top: 15px;
+        }
+
+        small a {
+            color: #0071eb;
+        }
+
+        /* Responsividade */
+        @media (max-width: 740px) {
+            .form-wrapper {
+                padding: 25px;
+                width: 90%;
+                max-width: 100%;
+                top: 50%;
+            }
+
+            .form-wrapper h2 {
+                font-size: 1.8rem;
+            }
+        }
+        .form-help {
+            margin-top: 10px;
+            color: #b3b3b3;
+            font-size: 0.9rem;
+        }
+        
+        .form-help a {
+            color: #0071eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .form-help a:hover {
+            text-decoration: underline;
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="feixe">
+        <svg width="200" height="200" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10,10 L90,50 L10,90 Z" />
+        </svg>
+    </div>
+
+    <div class="form-wrapper show">
+    <div class="form-container">
+        <h2>Login</h2>
+        <!-- login.html -->
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-control">
+                <input type="email" name="username" required placeholder="Email" id="username">
+                <label for="username">Email</label>
+            </div>
+            <div class="form-control">
+                <input type="password" name="password" required placeholder="Senha" id="password">
+                <label for="password">Senha</label>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        
+        
+        <!-- Link para a página de Cadastro -->
+        <p class="form-help">Não tem uma conta? <a href="{% url 'signup' %}">Cadastre-se aqui</a></p>
+    </div>
+</div>
+    
+    
+
+</body>
+</html>
